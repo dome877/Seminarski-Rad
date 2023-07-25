@@ -236,6 +236,175 @@ namespace Seminarski_Rad.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Seminarski_Rad.Models.Kategorija", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Naziv")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Kategorija");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.KategorijaProizvoda", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("KategorijaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProizvodId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KategorijaId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("KategorijaProizvoda");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.Narudzba", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DatumKreiran")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NarudzbaAdresa")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("NarudzbaCountry")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NarudzbaDrugoIme")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NarudzbaEmail")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NarudzbaGrad")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NarudzbaPostanskibroj")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("NarudzbaPrvoIme")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NarudzbaTelefon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Popust")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Poruka")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Ukupno")
+                        .HasColumnType("decimal(7,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Narudzba");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.NarudzbaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Količina")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NarudzbaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProizvodId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Ukupno")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NarudzbaId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("NarudzbaItem");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.Proizvod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("Cijena")
+                        .HasColumnType("decimal(9,2)");
+
+                    b.Property<int>("Količina")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Naziv")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Opis")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Proizvod");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -285,6 +454,49 @@ namespace Seminarski_Rad.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.KategorijaProizvoda", b =>
+                {
+                    b.HasOne("Seminarski_Rad.Models.Kategorija", null)
+                        .WithMany("KategorijaProizvoda")
+                        .HasForeignKey("KategorijaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Seminarski_Rad.Models.Proizvod", null)
+                        .WithMany("KategorijaProizvoda")
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.NarudzbaItem", b =>
+                {
+                    b.HasOne("Seminarski_Rad.Models.Narudzba", null)
+                        .WithMany("NarudzbaItem")
+                        .HasForeignKey("NarudzbaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Seminarski_Rad.Models.Proizvod", null)
+                        .WithMany("NarudzbaItem")
+                        .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.Kategorija", b =>
+                {
+                    b.Navigation("KategorijaProizvoda");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.Narudzba", b =>
+                {
+                    b.Navigation("NarudzbaItem");
+                });
+
+            modelBuilder.Entity("Seminarski_Rad.Models.Proizvod", b =>
+                {
+                    b.Navigation("KategorijaProizvoda");
+
+                    b.Navigation("NarudzbaItem");
                 });
 #pragma warning restore 612, 618
         }

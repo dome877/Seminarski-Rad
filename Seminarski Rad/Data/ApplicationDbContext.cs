@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Seminarski_Rad.Models;
 
 namespace Seminarski_Rad.Data
 {
@@ -12,7 +13,18 @@ namespace Seminarski_Rad.Data
             : base(options)
         {
         }
+
+        public DbSet<Proizvod> Proizvod { get; set; }
+        public DbSet<Kategorija> Kategorija { get; set; }
+        public DbSet<Narudzba> Narudzba { get; set; }
+        public DbSet<NarudzbaItem> NarudzbaItem { get; set; }
+        public DbSet<KategorijaProizvoda> KategorijaProizvoda { get; set; }
+
+
+
     }
+
+
     public class ApplicationUser : IdentityUser
     {
         [StringLength(50)]
