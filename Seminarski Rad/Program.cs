@@ -52,6 +52,13 @@ namespace Seminarski_Rad
             app.UseAuthentication();
             app.UseAuthorization();
 
+            using (var scope = app.Services.CreateAsyncScope())
+            {
+                var userManager = (UserManager<ApplicationUser>)scope.ServiceProvider.GetService(typeof(UserManager<ApplicationUser>));
+
+                ApplicationUserDbInit.SeedUsers(userManager);
+            }
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

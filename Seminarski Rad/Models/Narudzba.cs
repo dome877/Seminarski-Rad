@@ -45,6 +45,8 @@ namespace Seminarski_Rad.Models
 
         public string Poruka { get; set; }
 
+        public string? UserId { get; set; }
+
 
 
         [ForeignKey("NarudzbaId")]

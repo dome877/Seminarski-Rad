@@ -14,6 +14,14 @@ namespace Seminarski_Rad.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<IdentityRole>()
+                .HasData(new IdentityRole() { Name = "Admin", NormalizedName = "ADMIN" });
+        }
+
         public DbSet<Proizvod> Proizvod { get; set; }
         public DbSet<Kategorija> Kategorija { get; set; }
         public DbSet<Narudzba> Narudzba { get; set; }
@@ -34,6 +42,10 @@ namespace Seminarski_Rad.Data
         [StringLength(150)]
         public string? Address { get; set; }
 
-        
+        [ForeignKey("UserId")]
+        public List<Narudzba> Narudzba { get; set; }
+
+
+
     }
 }

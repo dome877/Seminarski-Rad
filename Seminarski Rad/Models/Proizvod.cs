@@ -16,10 +16,10 @@ namespace Seminarski_Rad.Models
         [Column(TypeName = "decimal(9,2)")]
         public decimal Cijena { get; set; }
 
-        [ForeignKey("ProductId")]
+        [ForeignKey("ProizvodId")]
         public List<KategorijaProizvoda>? KategorijaProizvoda { get; set; }
 
-        [ForeignKey("ProductId")]
+        [ForeignKey("ProizvodId")]
         public List<NarudzbaItem>? NarudzbaItem { get; set; }
 
     }
