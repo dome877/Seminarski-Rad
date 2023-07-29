@@ -8,19 +8,17 @@ namespace Seminarski_Rad.Data
         {
             ApplicationUser user = new ApplicationUser()
             {
-                UserName = "domagoj@seminarski.hr",
-                Email = "domagoj@seminarski.hr"
+                UserName = "test@test.hr",
+                Email = "test@test.hr"
             };
 
-            // kreiranje korisnika s passwordom
-            var result = userManager.CreateAsync(user, "Password12345").Result;
+            var result = userManager.CreateAsync(user, "password").Result;
 
-            // ako je sve ok
             if (result.Succeeded)
             {
-                //dodajem korisniku ulogu admnistratora
                 userManager.AddToRoleAsync(user, "Admin").Wait();
             }
         }
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Seminarski_Rad.Data;
 
@@ -11,9 +12,10 @@ using Seminarski_Rad.Data;
 namespace Seminarski_Rad.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230728193030_Role")]
+    partial class Role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,8 +53,8 @@ namespace Seminarski_Rad.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c1df5349-eccd-43e8-a8a7-78f3b256d763",
-                            ConcurrencyStamp = "bea4ff75-0344-4755-87b4-c252ff260756",
+                            Id = "e3820d63-8387-474a-8e73-63ccb6918f05",
+                            ConcurrencyStamp = "b38f0e71-ed45-4a63-825f-584b3fec915e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
