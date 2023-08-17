@@ -41,5 +41,55 @@ namespace Seminarski_Rad.Areas.Admin.Controllers
             return View(kategorija);
         }
 
+        public IActionResult Edit(int id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            var kategorija = _context.Kategorija.FirstOrDefault(k => k.Id == id);
+
+            if (kategorija == null)
+            {
+                return NotFound();
+            }
+
+            return View(kategorija);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Kategorija kategorija)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(kategorija);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(kategorija);
+        }
+
+
+
+        public IActionResult Delete(int id)
+        {
+            var kategorija = _context.Kategorija.FirstOrDefault(c => c.Id == id);
+
+            if (kategorija == null)
+            {
+                return NotFound();
+            }
+
+            _context.Kategorija.Remove(kategorija);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
     }
 }
