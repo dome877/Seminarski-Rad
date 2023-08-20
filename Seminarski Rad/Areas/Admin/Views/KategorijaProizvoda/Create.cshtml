@@ -1,0 +1,31 @@
+﻿@model KategorijaProizvoda
+
+<h1>Dodaj novu kategoriju</h1>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm-4">
+        <form asp-action="Create">
+            <input type="hidden" asp-for="ProizvodId" value="@ViewBag.ProductId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <select asp-for="KategorijaId" class="form-control" asp-items="@ViewBag.Categories">
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Dodaj novu kategoriju" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-proizvodID="@ViewBag.ProductId">Nazad na popis kategorija za ovaj proizvod</a>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

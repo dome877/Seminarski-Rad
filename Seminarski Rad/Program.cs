@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Seminarski_Rad.Data;
+using System.Globalization;
 
 namespace Seminarski_Rad
 {
@@ -46,6 +48,18 @@ namespace Seminarski_Rad
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+
+            var cultureInfo = new CultureInfo("hr-HR");
+            cultureInfo.NumberFormat.NumberDecimalSeparator = ".";
+            cultureInfo.NumberFormat.CurrencyDecimalSeparator = ".";
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(cultureInfo),
+                SupportedCultures = new List<CultureInfo> { cultureInfo },
+                SupportedUICultures = new List<CultureInfo> { cultureInfo },
+
+            });
 
             app.UseRouting();
 
