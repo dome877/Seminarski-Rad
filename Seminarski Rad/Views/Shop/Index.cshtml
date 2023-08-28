@@ -1,0 +1,58 @@
+﻿@model List<Proizvod>
+
+<div class="row">
+    <div class="col-md-2">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Filtriraj po kategoriji
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+
+            @foreach (var item in ViewBag.Categories)
+            {
+                <li>
+                    <a class="dropdown-item" asp-action="Index" asp-route-kategorijaID="@item.Value">
+                        @item.Text
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-2">
+        <a asp-action="Index" class="btn btn-light">Resetiraj filtere</a>
+    </div>
+</div>
+
+<div class="row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-4 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Naziv</h5>
+                    <p class="card-text">@item.Opis</p>
+                    <table class="table table-condensed table-hover">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @item.Cijena EUR
+                                </td>
+                                <td>
+                                    <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                        <div class="align-self-center">
+                                            <input type="hidden" name="productId" value="@item.Id" />
+                                            <input type="submit" class="btn btn-outline-primary p-2" value="Dodaj u Košaricu" />   
+                                        </div>
+                                        
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>

@@ -66,7 +66,6 @@ namespace Seminarski_Rad.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Check if the category for the product already exists
                 var existingCategory = _context.KategorijaProizvoda
                     .FirstOrDefault(kp => kp.ProizvodId == kategorijaproizvoda.ProizvodId && kp.KategorijaId == kategorijaproizvoda.KategorijaId);
 
@@ -79,7 +78,7 @@ namespace Seminarski_Rad.Areas.Admin.Controllers
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Category already exists for this product.";
+                    TempData["ErrorMessage"] = "Kategorija već postoji za ovaj proizvod";
                     return RedirectToAction(nameof(Create), new { proizvodID = kategorijaproizvoda.ProizvodId });
                 }
             }
