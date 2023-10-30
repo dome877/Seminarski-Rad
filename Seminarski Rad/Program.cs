@@ -32,6 +32,8 @@ namespace Seminarski_Rad
                 options.Password.RequiredUniqueChars = 0;
             });
 
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -73,6 +75,7 @@ namespace Seminarski_Rad
                 ApplicationUserDbInit.SeedUsers(userManager);
             }
 
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

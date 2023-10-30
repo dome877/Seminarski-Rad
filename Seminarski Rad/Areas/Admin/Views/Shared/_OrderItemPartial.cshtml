@@ -1,0 +1,40 @@
+﻿@model List<NarudzbaItem>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Proizvod
+            </th>
+            <th>
+                Količina
+            </th>
+            <th>
+                Ukupno
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelITem => item.ProizvodNaziv)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelITem => item.Količina)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelITem => item.Ukupno)
+                    </td>
+                    <td>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-item-id="@item.Id">Izbriši</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+

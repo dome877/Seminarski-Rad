@@ -1,0 +1,87 @@
+﻿@model Narudzba
+
+
+
+<h1>Edit order </h1>
+
+<hr />
+<div class="row">
+
+    <form asp-action="Edit">
+        <div class="col-md-4">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DatumKreiran" class="control-label"></label>
+                <input asp-for="DatumKreiran" type="datetime" class="form-control" />
+                <span asp-validation-for="DatumKreiran" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ukupno" class="control-label"></label>
+                <input asp-for="Ukupno" class="form-control" />
+                <span asp-validation-for="Ukupno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarudzbaPrvoIme" class="control-label"></label>
+                <input asp-for="NarudzbaPrvoIme" class="form-control" />
+                <span asp-validation-for="NarudzbaPrvoIme" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarudzbaDrugoIme" class="control-label"></label>
+                <input asp-for="NarudzbaDrugoIme" class="form-control" />
+                <span asp-validation-for="NarudzbaDrugoIme" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarudzbaEmail" class="control-label"></label>
+                <input asp-for="NarudzbaEmail" class="form-control" />
+                <span asp-validation-for="NarudzbaEmail" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="NarudzbaTelefon" class="control-label"></label>
+                <input asp-for="NarudzbaTelefon" class="form-control" />
+                <span asp-validation-for="NarudzbaTelefon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarudzbaAdresa" class="control-label"></label>
+                <input asp-for="NarudzbaAdresa" class="form-control" />
+                <span asp-validation-for="NarudzbaAdresa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarudzbaGrad" class="control-label"></label>
+                <input asp-for="NarudzbaGrad" class="form-control" />
+                <span asp-validation-for="NarudzbaGrad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarudzbaCountry" class="control-label"></label>
+                <input asp-for="NarudzbaCountry" class="form-control" />
+                <span asp-validation-for="NarudzbaCountry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NarudzbaPostanskibroj" class="control-label"></label>
+                <input asp-for="NarudzbaPostanskibroj" class="form-control" />
+                <span asp-validation-for="NarudzbaPostanskibroj" class="text-danger"></span>
+            </div>            
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Poruka" class="control-label"></label>
+                <input asp-for="Poruka" class="form-control" />
+                <span asp-validation-for="Poruka" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Save" />
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Nazad na popis narudžbi</a>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

@@ -1,0 +1,111 @@
+﻿@model List<CartItem>
+
+@if (Model.Count == 0)
+{
+        <div class="text-center">
+            <h1 class="display-4">Tvoja košarica je prazna!</h1>
+        </div>
+}
+else
+{
+        <div class="text-center">
+            <h1 class="display-4">Cart items</h1>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Proizvod</th>
+                    <th>Cijena</th>
+                    <th>Količina</th>
+                    <th>Ukupno</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                        <tr>  
+                            <td>@item.Proizvod.Naziv</td>
+                            <td>@item.Proizvod.Cijena.ToString("0.00")</td>
+                            <td>@item.Količina</td>
+                            <td>@item.GetTotal().ToString("0.00")</td>
+                            <td>
+                                <a class="btn btn-outline-primary p-2" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-item-id="@item.Proizvod.Id">Izbriši</a>
+                            </td>
+                        </tr>
+            }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <b>
+                            Ukupna cijena: @ViewBag.TotalPrice.ToString("0.00")
+                        </b>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+}
+<hr />
+<div class="d-flex flex-row justify-content-center gap-3">
+    <a class="btn btn-outline-primary p-2 " asp-controller="Shop" asp-action="Index">
+        Nastavi u kupovinu
+
+    </a>
+
+    <a class="btn btn-outline-primary p-2" asp-controller="Shop" asp-action="Order">
+        Naruči
+    </a>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Brisanje</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Jeste li sigurni za brisanje ove stavke?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-primary" onclick="confirmDelete()">Izbriši</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Kod za Redirectanje na Delete Controller-->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        var deleteItemId = null;
+
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteItemId = button.data('item-id');
+            
+
+        });
+
+        $('#exampleModal').on('hidden.bs.modal', function () {
+            deleteItemId = null;
+        });
+
+        function confirmDelete() {
+            if (deleteItemId !== null) {
+                console.log('deleteItemId before redirect:', deleteItemId);
+                window.location.href = '/Cart/Delete?productId=' + deleteItemId;
+            }
+        }
+    </script>
+}

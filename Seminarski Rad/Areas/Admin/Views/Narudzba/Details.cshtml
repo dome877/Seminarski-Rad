@@ -1,0 +1,145 @@
+﻿@model Narudzba
+
+<h1>Detalji narudžbe </h1>
+
+@if (TempData["SuccessAdd"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessAdd"]
+    </div>
+}
+
+    <dl class="row">
+        <dt class="col-md-2">
+            Ime
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaPrvoIme)
+        </dd>
+        <dt class="col-md-2">
+            Prezime
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaDrugoIme)
+        </dd>
+        <dt class="col-md-2">
+            Email
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaEmail)
+        </dd>
+        <dt class="col-md-2">
+            Telefon
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaTelefon)
+        </dd>
+        <dt class="col-md-2">
+            Adresa
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaAdresa)
+        </dd>
+        <dt class="col-md-2">
+            Grad
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaGrad)
+        </dd>
+        <dt class="col-md-2">
+            Poštanski broj
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaPostanskibroj)
+        </dd>
+        <dt class="col-md-2">
+            Država
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.NarudzbaCountry)
+        </dd>
+    </dl>
+
+    <hr />
+
+    <dl class="row">
+        <dt class="col-md-2">
+            @Html.DisplayNameFor(model => model.Poruka)
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.Poruka)
+        </dd>
+        <dt class="col-md-2">
+            @Html.DisplayNameFor(model => model.DatumKreiran)
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.DatumKreiran)
+        </dd>
+        <dt class="col-md-2">
+            @Html.DisplayNameFor(model => model.Ukupno)
+        </dt>
+        <dd class="col-md-10">
+            @Html.DisplayFor(model => model.Ukupno)
+        </dd>
+    </dl>
+    <hr />
+
+    <div>
+        <a asp-action="NewOrderItem" asp-route-orderId="@Model.Id">Dodaj proizvod u narudžbu</a>
+    </div>
+
+<partial name="_OrderItemPartial" for="@Model.NarudzbaItem" />
+
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Uredi</a> |
+    <a asp-action="Index">Nazad u popis narudžbi</a>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Brisanje</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Jeste li sigurni za brisanje ove stavke?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                <button type="button" class="btn btn-primary" onclick="confirmDelete()">Izbriši</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Kod za Redirectanje na Delete Controller-->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        var deleteItemId = null;
+
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteItemId = button.data('item-id');
+        });
+
+        $('#exampleModal').on('hidden.bs.modal', function () {
+            deleteItemId = null;
+        });
+
+        function confirmDelete() {
+            if (deleteItemId !== null) {
+                window.location.href = '/Admin/Narudzba/DeleteItem?id=' + deleteItemId;
+            }
+        }
+    </script>
+
+    }

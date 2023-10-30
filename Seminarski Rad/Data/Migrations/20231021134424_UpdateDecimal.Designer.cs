@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Seminarski_Rad.Data;
 
@@ -11,9 +12,10 @@ using Seminarski_Rad.Data;
 namespace Seminarski_Rad.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231021134424_UpdateDecimal")]
+    partial class UpdateDecimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,8 +53,8 @@ namespace Seminarski_Rad.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "bada6c53-2d6f-4905-aa8f-4b95cd489aec",
-                            ConcurrencyStamp = "e3504990-dfaa-4706-8138-8b95d0c79a4f",
+                            Id = "55c7982e-23e0-44b9-b6fa-04aa1097fe43",
+                            ConcurrencyStamp = "a4bb2c23-06d6-4427-834c-06a643d95793",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -364,8 +366,8 @@ namespace Seminarski_Rad.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Količina")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Količina")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("NarudzbaId")
                         .HasColumnType("int");

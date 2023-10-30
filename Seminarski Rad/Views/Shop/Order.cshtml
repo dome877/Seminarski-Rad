@@ -1,0 +1,169 @@
+﻿@model List<CartItem>
+
+<div class="text-center">
+    <h1 class="display-4">Naručite</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Proizvod</th>
+                        <th>Cijena</th>
+                        <th>Količina</th>
+                        <th>Ukupno</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Proizvod.Naziv</td>
+                            <td>@item.Proizvod.Cijena.ToString("0.00")</td>
+                            <td>@item.Količina</td>
+                            <td>@item.GetTotal().ToString("0.00")</td>
+                            <td>
+                                <a class="btn btn-outline-primary p-2" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-item-id="@item.Proizvod.Id">Izbriši</a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>
+                                Ukupna cijena: @ViewBag.TotalPrice.ToString("0.00")
+                            </b>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h5>Osobni podatci</h5>
+
+                @if (ViewBag.Errors.Count > 0)
+                {
+                    <div class="alert alert-danger text-center">
+                        @foreach (var error in ViewBag.Errors)
+                        {
+                            <p>@error</p>
+                        }
+                    </div>
+
+                }
+                <form method="post" asp-controller="Shop" asp-action="CreateOrder">
+                    <input type="hidden" name="Ukupno" value="@ViewBag.TotalPrice" />
+                    <div class="row">
+                        <div class="text-start form-group col-md-6">
+                            <label class="text-start" for="NarudzbaPrvoIme">Ime *</label>
+                            <input type="text" name="NarudzbaPrvoIme" class="form-control" />
+                        </div>
+                        <div class="text-start  form-group col-md-6">
+                            <label for="NarudzbaDrugoIme">Prezime *</label>
+                            <input type="text" name="NarudzbaDrugoIme" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-start form-group col-md-6 co-sm-2">
+                            <label for="NarudzbaEmail">Email *</label>
+                            <input type="email" name="NarudzbaEmail" class="form-control" />
+                        </div>
+                        <div class="text-start form-group col-md-6">
+                            <label for="NarudzbaTelefon">Kontakt broj *</label>
+                            <input type="text" name="NarudzbaTelefon" class="form-control" />
+                        </div>
+                        <div class="text-start form-group">
+                            <label for="NarudzbaAdresa">Adresa *</label>
+                            <input type="text" name="NarudzbaAdresa" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-start  form-group col-md-6">
+                            <label for="NarudzbaGrad">Grad *</label>
+                            <input type="text" name="NarudzbaGrad" class="form-control" />
+                        </div>
+                        <div class="text-start form-group col-md-4">
+                            <label for="NarudzbaCountry">Država *</label>
+                            <select class="form-control" name="NarudzbaCountry">
+                                <option value="Croatia">Hrvatska</option>
+                                <option value="Slovenia">Slovenija</option>
+                            </select>
+                        </div>
+                        <div class="text-start form-group col-md-2">
+                            <label for="NarudzbaPostanskibroj">Poštanski broj *</label>
+                            <input type="text" class="form-control" name="NarudzbaPostanskibroj" />
+                        </div>
+                        <div class="text-start form-group">
+                            <label for="Poruka">Poruka</label>
+                            <textarea class="form-control" name="Poruka" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex flex-row justify-content-center gap-3">
+                        <input type="submit" class="btn btn-outline-primary p-3" value="naruči" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Brisanje</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Jeste li sigurni za brisanje ove stavke?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmDelete()">Izbriši</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Kod za Redirectanje na Delete Controller-->
+    @section Scripts {
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+
+            var deleteItemId = null;
+
+            $('#exampleModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                deleteItemId = button.data('item-id');
+
+
+            });
+
+            $('#exampleModal').on('hidden.bs.modal', function () {
+                deleteItemId = null;
+            });
+
+            function confirmDelete() {
+                if (deleteItemId !== null) {
+                    console.log('deleteItemId before redirect:', deleteItemId);
+                    window.location.href = '/Cart/Delete?productId=' + deleteItemId;
+                }
+            }
+        </script>
+    }
+</div>

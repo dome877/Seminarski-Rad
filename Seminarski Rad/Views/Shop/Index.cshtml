@@ -1,10 +1,46 @@
 ﻿@model List<Proizvod>
 
+@if (TempData["Message"] != null)
+{
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div class="alert alert-warning" role="alert">
+                @TempData["Message"]
+            </div>
+        </div>
+    </div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="row text-center">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert">
+                @TempData["Success"]
+            </div>
+        </div>
+    </div>
+}
+
 <div class="row">
     <div class="col-md-2">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            Filtriraj po kategoriji
-        </button>
+        @{
+            var selectedCategoryId = Context.Request.Query["kategorijaID"].ToString();
+            var selectedCategoryText = "Filtriraj po kategoriji";
+            
+            foreach (var item in ViewBag.Categories)
+            {
+                if (item.Value == selectedCategoryId)
+                {
+                    selectedCategoryText = item.Text;
+                    break;
+                }
+            }
+            
+            @selectedCategoryText
+        }
+    </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 
             @foreach (var item in ViewBag.Categories)
@@ -38,7 +74,7 @@
                                     @item.Cijena EUR
                                 </td>
                                 <td>
-                                    <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                    <form method="post" asp-controller="Cart" asp-action="DodajCart">
                                         <div class="align-self-center">
                                             <input type="hidden" name="productId" value="@item.Id" />
                                             <input type="submit" class="btn btn-outline-primary p-2" value="Dodaj u Košaricu" />   
